@@ -1,3 +1,8 @@
+/* File: Main.c
+ * Author: Jacob Peterson
+ * Last updated: 5/22/2021
+ */
+
 #include <stdio.h>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -23,12 +28,17 @@ const struct rgb color_values[4] = {
     {89, 174, 196}
 };
 
+const int grid_width = 22;
+const int grid_height = 11;
+enum color grid_colors[22*11];
+
 int get_color_difference(struct rgb color1, struct rgb color2) {
     int x = color1.r - color2.r;
     int y = color1.g - color2.g;
     int z = color1.b - color2.b;
 
-    return ((x >= 0) ? x : -x) + ((y >= 0) ? y : -y) + ((z >= 0) ? z : -z);
+    // Sum of abs value of difference
+    return ((x>=0) ? x: -x) + ((y >= 0) ? y : -y) + ((z >= 0) ? z : -z);
 }
 
 enum color get_closest_color(struct rgb color) {
@@ -68,11 +78,8 @@ int main() {
     // ... x = width, y = height, n = # 8-bit components per pixel ...
 
     // Save image data
-    const int grid_width = 22;
-    const int grid_height = 11;
     const int block_width = img_width / grid_width;
     const int block_height = img_height / grid_height;
-    enum color grid_colors[22*11];
 
     int i = 0;
     for (int y = 0; y < 11; y++) {
